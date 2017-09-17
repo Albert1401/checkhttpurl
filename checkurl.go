@@ -1,9 +1,9 @@
 package main
 
 import (
-	"net/http"
 	"flag"
 	"fmt"
+	"net/http"
 	"time"
 )
 
@@ -15,15 +15,13 @@ const usage = "Usage:\n\tcheckurl [-t timeout] [-i interval] url" +
 	"\n" +
 	"\tcheckurl https://www.jetbrains.com/go/"
 
-
-
-	func ping(url string, interval time.Duration, ch chan bool) {
+func ping(url string, interval time.Duration, ch chan bool) {
 	for {
 		resp, err := http.Head(url)
-		if (err != nil) {
+		if err != nil {
 			fmt.Println(err.Error())
 		} else {
-			if (resp.StatusCode != 200) {
+			if resp.StatusCode != 200 {
 				fmt.Println("Bad response status code:", resp.StatusCode)
 			} else {
 				ch <- true
@@ -34,7 +32,7 @@ const usage = "Usage:\n\tcheckurl [-t timeout] [-i interval] url" +
 }
 
 func main() {
-	timeout := flag.Duration("t", time.Minute * 10, "")
+	timeout := flag.Duration("t", time.Minute*10, "")
 	interval := flag.Duration("i", time.Second, "")
 	flag.Usage = func() {
 		fmt.Println(usage)
